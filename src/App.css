@@ -1,0 +1,21 @@
+
+.app-header {
+  color: white;
+  font-weight: bold;
+  font-size: 32px;
+  text-align: center;
+  position: fixed;
+  width: 100vw;
+  background: aqua;
+  height: 50px
+}
+
+.app-header {
+  position:relative;
+  top: 0;
+}
+
+.app-main {
+  top: 50px;
+  height: calc(100vh - 50px);
+}

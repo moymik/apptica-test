@@ -1,27 +1,55 @@
-import {useState} from 'react'
-
-import viteLogo from '/vite.svg'
-import {useSelector} from "react-redux";
-import {useDispatch} from "react-redux";
+import { useSelector} from "react-redux";
 import './App.css'
-import {increment} from "./store/counter/counterSlice.js";
-import Chart from './components/TopHistoryWidget/Chart/index.jsx'
+
+import TopHistoryWidget from "./components/TopHistoryWidget/index.jsx";
+import DataStatus from "./components/DataStatus.jsx"
+import {useLoadData} from "./hooks/useLoadData.js";
 
 function App() {
+  useLoadData(); // Загрузка данных
 
-  const dispatch = useDispatch()
-
-  const count = useSelector((state) => state.counter.value)
-
+  const {shouldRender, loading, error, countriesData, categoriesData} = useSelector(
+      selectCombinedData,
+      combinedDataEqualityCheck
+  );
 
   return (
-      <>
-        <header>Header</header>
-        <main><Chart/>
+      <div className="app">
+        <header className="app-header">TopHistoryWidget example</header>
+        <main className="app-main">
+          <DataStatus loading={loading} error={error}/>
+          {shouldRender && (
+              <TopHistoryWidget
+                  countries={countriesData}
+                  categories={categoriesData}
+              />
+          )}
         </main>
-        <footer>Footer</footer>
-      </>
-)
+      </div>
+  );
 }
 
-export default App
+
+
+const selectCombinedData = (state) => {
+  const countries = state.countries;
+  const categories = state.categories;
+
+  return {
+    shouldRender: !countries.loading && !categories.loading && !countries.error && !categories.error,
+    loading: countries.loading || categories.loading,
+    error: countries.error || categories.error,
+    countriesData: countries.countries,
+    categoriesData: categories.categories
+  };
+};
+
+// Функция сравнения
+const combinedDataEqualityCheck = (prev, next) => (
+    prev.loading === next.loading &&
+    prev.error === next.error &&
+    prev.shouldRender === next.shouldRender
+);
+
+
+export default App;
