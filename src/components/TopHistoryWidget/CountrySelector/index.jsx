@@ -12,7 +12,6 @@ const CountrySelector = ({ countries = [], onSelectionChanged = () => {} }) => {
         <select
             className={styles.select}
             onChange={handleChange}
-            defaultValue=""
         >
           <option value="" disabled>Select a country</option>
           {countries.map((country) => (

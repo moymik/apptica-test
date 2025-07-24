@@ -54,6 +54,7 @@ function createData(categoriesMap, chartData) {
     const categoryPrimaryName = categoriesMap[i]
     for (let k in chartData.data[i]) {
       if (labels === null) {
+        console.log(1)
         labels = Object.keys(chartData.data[i][k]).map(date=>formatDate(date));
       }
       const categoryName = categoryPrimaryName + ' - ' + subCategoriesMap[k];
@@ -64,6 +65,7 @@ function createData(categoriesMap, chartData) {
   return {datasets, labels}
 }
 
+//Для отображения подписей
 function formatDate(inputDate) {
   const months = [
     'jan', 'feb', 'mar', 'apr', 'may', 'jun',
@@ -77,6 +79,7 @@ function formatDate(inputDate) {
 
   return `${day} ${month} ${year}`;
 }
+
 const subCategoriesMap = {
   1: 'Top Fee',
   2: 'Top Paid',
