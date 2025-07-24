@@ -1,17 +1,31 @@
-import { useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import './App.css'
 
 import TopHistoryWidget from "./components/TopHistoryWidget/index.jsx";
 import DataStatus from "./components/DataStatus.jsx"
 import {useLoadData} from "./hooks/useLoadData.js";
+import {fetchChartData} from "./store/chartDataSlice.js";
+import {useDispatch} from "react-redux";
+import {useEffect} from "react";
 
 function App() {
   useLoadData(); // Загрузка данных
 
+  const dispatch = useDispatch();
   const {shouldRender, loading, error, countriesData, categoriesData} = useSelector(
       selectCombinedData,
       combinedDataEqualityCheck
   );
+
+  const chartData = useSelector(state => state.chartData);
+
+  const handleCountrySelection = (countryId) => {
+    dispatch(fetchChartData(countryId));
+  };
+  // Первоначальная загрузка данных для графика (страна по умолчанию)
+  useEffect(() => {
+    handleCountrySelection(1); // Загружаем данные для страны с ID=1 при монтировании
+  }, []);
 
   return (
       <div className="app">
@@ -22,13 +36,14 @@ function App() {
               <TopHistoryWidget
                   countries={countriesData}
                   categories={categoriesData}
+                  onSelectionChanged={handleCountrySelection}
+                  chartData={chartData}
               />
           )}
         </main>
       </div>
   );
 }
-
 
 
 const selectCombinedData = (state) => {

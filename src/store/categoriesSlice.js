@@ -26,7 +26,8 @@ const countriesSlice = createSlice({
   },
 });
 
-const { fetchCategoriesStart, fetchCategoriesSuccess, fetchCategoriesFailure } = countriesSlice.actions;
+const { fetchCategoriesStart, fetchCategoriesSuccess,
+  fetchCategoriesFailure } = countriesSlice.actions;
 
 export const fetchCategories= () => async (dispatch) => {
   try {

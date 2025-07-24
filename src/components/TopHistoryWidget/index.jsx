@@ -3,9 +3,10 @@ import Chart from './Chart';
 import CountrySelector from './CountrySelector/index.jsx';
 import styles from './index.module.css';
 
-const TopHistoryWidget = () => {
+const TopHistoryWidget = (props) => {
+  console.log(props);
   return (
-      <div className={styles.widget}>
+      <div className={styles['top-history']}>
         <h2>Top History</h2>
         <Chart/>
         <CountrySelector/>
