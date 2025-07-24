@@ -1,4 +1,10 @@
-.top-history {
+.history {
   background-color: bisque;
   min-width: 375px;
+}
+.history__top-panel{
+  background-color: #c88b46;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
