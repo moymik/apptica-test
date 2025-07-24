@@ -1,5 +1,5 @@
 export const fetchChartDataApi = async (countryId,
-                                        dateFrom = '2025-07-20',
+                                        dateFrom = '2025-07-10',
                                         dateTo = '2025-07-24',
                                         platforms = 1) => {
   // Формируем URL с параметрами

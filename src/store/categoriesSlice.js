@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import {fetchCategoriesApi} from '../api/categoriesApi.js';
 
 const initialState = {
-  categories: [],
+  categoriesMap: {},
   loading: false,
   error: null,
 };
@@ -16,7 +16,21 @@ const countriesSlice = createSlice({
       state.error = null;
     },
     fetchCategoriesSuccess(state, action) {
-      state.categories = action.payload.data;
+      const categoriesData = action.payload.data;
+
+      // Создаем мапу id → name
+      const categoriesMap = {};
+      categoriesData.forEach(group => {
+        // Добавляем основную группу
+        categoriesMap[group.id] = group.name;
+
+        // Добавляем все подкатегории
+        group.categories?.forEach(category => {
+          categoriesMap[category.id] = category.name;
+        });
+      });
+
+      state.categoriesMap = categoriesMap;
       state.loading = false;
     },
     fetchCategoriesFailure(state, action) {

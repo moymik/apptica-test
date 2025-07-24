@@ -2,7 +2,7 @@ import {createSlice} from '@reduxjs/toolkit';
 import {fetchChartDataApi} from '../api/chartDataApi.js';
 
 const initialState = {
-  chartData: {},
+  data: {},
   loading: false,
   error: null,
 };
@@ -16,7 +16,7 @@ const chartDataSlice = createSlice({
       state.error = null;
     },
     fetchChartDataSuccess(state, action) {
-      state.chartData = action.payload.chartData;
+      state.data = action.payload.data;
       state.loading = false;
     },
     fetchChartDataFailure(state, action) {
@@ -35,7 +35,7 @@ export const fetchChartData = (countryId) => async (dispatch) => {
   try {
     dispatch(fetchChartDataStart());
     const response = await fetchChartDataApi(countryId);
-    dispatch(fetchChartDataSuccess({chartData: response.data, countryId: countryId}));
+    dispatch(fetchChartDataSuccess({data: response.data, countryId: countryId}));
   } catch (error) {
     dispatch(fetchChartDataFailure(error.message));
   }

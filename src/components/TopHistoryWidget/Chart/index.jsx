@@ -9,7 +9,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-import { Line } from 'react-chartjs-2';
+import {Line} from 'react-chartjs-2';
 
 ChartJS.register(
     CategoryScale,
@@ -25,7 +25,7 @@ export const options = {
   responsive: true,
   plugins: {
     legend: {
-      position: 'top',
+      position: 'bottom',
     },
     title: {
       display: true,
@@ -47,13 +47,58 @@ export const data = {
     },
     {
       label: 'Dataset 2',
-      data: [1,2,3],
+      data: [1, 2, 3],
       borderColor: 'rgb(53, 162, 235)',
       backgroundColor: 'rgba(53, 162, 235, 0.5)',
     },
   ],
 };
 
-export default function Chart() {
-  return <Line options={options} data={data} />;
+export default function Chart({categoriesMap, chartData}) {
+
+  let data = createData(categoriesMap,chartData);
+  console.log(data)
+
+  return <Line options={options} data={data}/>;
 }
+
+function createData(categoriesMap, chartData) {
+
+
+
+  const datasets = [];
+  for (let i in chartData.data) {
+    const categoryName = categoriesMap[i]
+    for(let k in chartData.data[i]) {
+      const label = categoryName + ' - ' + subCategoriesMap[k];
+      const data = Object.values(chartData.data[i][k]);
+      datasets.push({label:label,data:data,backgroundColor:"red",borderColor:"red"});
+
+    }
+
+  }
+  return {datasets,labels}
+}
+
+
+
+const subCategoriesMap = {
+  1: 'Top Fee',
+  2: 'Top Paid',
+  3: 'Top Grossing',
+  4: 'Top Free',
+  5: 'Top Paid',
+  6: 'Top Grossing',
+  7: 'New Free',
+  8: 'New Paid',
+  9: 'Trending'
+}
+/*
+*
+*
+*
+*
+*
+*
+*
+* */

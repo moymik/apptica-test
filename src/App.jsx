@@ -17,6 +17,7 @@ function App() {
       combinedDataEqualityCheck
   );
 
+
   const chartData = useSelector(state => state.chartData);
 
   const handleCountrySelection = (countryId) => {
@@ -35,7 +36,7 @@ function App() {
           {shouldRender && (
               <TopHistoryWidget
                   countries={countriesData}
-                  categories={categoriesData}
+                  categoriesMap={categoriesData}
                   onSelectionChanged={handleCountrySelection}
                   chartData={chartData}
               />
@@ -55,7 +56,7 @@ const selectCombinedData = (state) => {
     loading: countries.loading || categories.loading,
     error: countries.error || categories.error,
     countriesData: countries.countries,
-    categoriesData: categories.categories
+    categoriesData: categories.categoriesMap
   };
 };
 
