@@ -39,11 +39,10 @@ export const options = {
   },
 };
 
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-
 
 export default function Chart({categoriesMap, chartData}) {
   let data = createData(categoriesMap, chartData);
+  console.log('data generated')
   return <Line options={options} data={data}/>;
 }
 
@@ -55,8 +54,7 @@ function createData(categoriesMap, chartData) {
     const categoryPrimaryName = categoriesMap[i]
     for (let k in chartData.data[i]) {
       if (labels === null) {
-        labels = Object.keys(chartData.data[i][k])
-        console.log(chartData.data[i][k])
+        labels = Object.keys(chartData.data[i][k]).map(date=>formatDate(date));
       }
       const categoryName = categoryPrimaryName + ' - ' + subCategoriesMap[k];
       const data = Object.values(chartData.data[i][k]);
@@ -66,7 +64,19 @@ function createData(categoriesMap, chartData) {
   return {datasets, labels}
 }
 
+function formatDate(inputDate) {
+  const months = [
+    'jan', 'feb', 'mar', 'apr', 'may', 'jun',
+    'jul', 'aug', 'sep', 'oct', 'nov', 'dec'
+  ];
 
+  const date = new Date(inputDate);
+  const day = date.getDate();
+  const month = months[date.getMonth()];
+  const year = date.getFullYear();
+
+  return `${day} ${month} ${year}`;
+}
 const subCategoriesMap = {
   1: 'Top Fee',
   2: 'Top Paid',

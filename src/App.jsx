@@ -23,10 +23,14 @@ function App() {
   const handleCountrySelection = (countryId) => {
     dispatch(fetchChartData(countryId));
   };
-  // Первоначальная загрузка данных для графика (страна по умолчанию)
+
+  // Первоначальная загрузка данных для графика
   useEffect(() => {
-    handleCountrySelection(1); // Загружаем данные для страны с ID=1 при монтировании
-  }, []);
+    if(countriesData?.length>0){
+      handleCountrySelection(countriesData[0].id);
+      console.log("initial chartData Loaded")
+    }
+  }, [countriesData,dispatch]);
 
   return (
       <div className="app">
