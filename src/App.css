@@ -18,4 +18,12 @@
 .app-main {
   top: 50px;
   height: calc(100vh - 50px);
+  display: flex;
+  flex-direction:row;
+
+}
+
+.description{
+  padding:2rem;
+  width:30vw;
 }

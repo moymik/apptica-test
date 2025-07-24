@@ -42,7 +42,7 @@ export const options = {
 
 export default function Chart({categoriesMap, chartData}) {
   let data = createData(categoriesMap, chartData);
-  console.log('data generated')
+  console.log('chart data transformed')
   return <Line options={options} data={data}/>;
 }
 
@@ -54,7 +54,6 @@ function createData(categoriesMap, chartData) {
     const categoryPrimaryName = categoriesMap[i]
     for (let k in chartData.data[i]) {
       if (labels === null) {
-        console.log(1)
         labels = Object.keys(chartData.data[i][k]).map(date=>formatDate(date));
       }
       const categoryName = categoryPrimaryName + ' - ' + subCategoriesMap[k];
